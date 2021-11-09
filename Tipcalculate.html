@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tip Calculator</title>
+
+    <style>
+        body {
+            font-family: fantasy;
+            background: rgb(166, 235, 247);
+        }
+
+        #container {
+            width: 300px;
+            height: 500px;
+            background: white;
+            border-radius: 20px;
+            margin: 50px auto;
+
+        }
+
+        h1 {
+            background: rgb(238, 49, 87);
+            color: whitesmoke;
+            font-size: 20px;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            padding: 10px 10px 10px 60px;
+            text-transform: uppercase;
+        }
+
+        p {
+            padding-left: 20px;
+            font-size: 16px;
+        }
+
+        form input[type="text"] {
+            width: 150px;
+        }
+
+        input {
+            padding: 10px;
+        }
+
+        #billamt {
+            width: 60%;
+            font-size: 14px;
+            background: white;
+            padding: 5px auto;
+            margin-left: 10px;
+            color: red;
+        }
+
+        #billamt:focus {
+            background: white;
+        }
+
+        #service {
+            width: 65%;
+            font-size: 17px;
+            padding: 5px auto;
+            margin-left: 50px;
+        }
+
+        #peopleamt {
+            width: 60%;
+            font-size: 14px;
+            background: snow;
+            padding: 5px auto;
+            margin-left: 10px;
+            color: red;
+        }
+
+        button {
+            width: 170px;
+            height: 50px;
+            background: rgb(238, 49, 87);
+            color: whitesmoke;
+            font-size: 20px;
+            margin: 30px auto;
+            display: block;
+            text-transform: uppercase;
+        }
+
+        #totaltip {
+            font-size: 30px;
+            margin-top: 5px;
+            text-align: center;
+        }
+
+        #totaltip:before {
+            content: "Total Tip";
+            font-size: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            display: block;
+        }
+
+        #totaltip sup {
+            font-size: 20px;
+            top: -18px;
+        }
+
+        #totaltip small {
+            font-size: 20px;
+            font-weight: bold;
+            display: block;
+        }
+
+        .footer {
+            position: fixed;
+            font-family: 'Roboto', sans-serif;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="container">
+
+        <div id="calculator">
+            <h1> Tip Calculator</h1>
+
+            <form autocomplete="off">
+
+                <p>How much was your Bill?</p>
+                <p>$ <input id="billamt" type="text" placeholder="Enter Bill Amount"></p>
+                <p>How was service?</p>
+                <select id="service">
+                    <option selected disabled value="">Select level of Service</option>
+                    <option value="0.3">Great Service</option>
+                    <option value="0.2">Good Service</option>
+                    <option value="0.15">It is OK</option>
+                    <option value="0.1">Bad Service</option>
+                    <option value="0.05">Terrible</option>
+                </select>
+
+                <p>How many people sharing the Bill?</p>
+                <p>people:<input id="peopleamt" type="text" placeholder="Enter number of people"></p>
+
+            </form>
+
+            <button id="btnclick" type="button">Calculate</button>
+        </div>
+
+        <div id="totaltip">
+            <sup>$</sup><span id="tip">0.00</span>
+            <small id="each"></small>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <p>&copy; Umesh Pathak</p>
+    </div>
+
+    <script>
+        function calculate() {
+            let billamt = document.getElementById("billamt").value;
+            let serviceamt = document.getElementById("service").value;
+            let peopleamt = document.getElementById("peopleamt").value;
+
+            if (billamt === "" | serviceamt === "" | peopleamt === "") {
+                alert("Please enter value or Select a service");
+                return;
+            }
+            if (peopleamt === "" || peopleamt <= 0) {
+                peopleamt = 1;
+
+                document.getElementById("each").style.display = "none";
+            } else {
+                document.getElementById("each").style.display = "block";
+            }
+
+            let total = (billamt * serviceamt)/peopleamt;
+            total = Math.round(total * 100)/100;
+            total = total.toFixed(2);
+            document.getElementById("totaltip").style.display = "block";
+            document.getElementById("tip").innerHTML = total;
+        }
+
+        document.getElementById("totaltip").style.display = "none";
+        document.getElementById("each").style.display = "none";
+
+        document.getElementById("btnclick").onclick = function() {
+            calculate();
+        }
+    </script>
+</body>
+
+</html>
